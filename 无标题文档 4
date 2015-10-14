@@ -1,0 +1,12 @@
+#include <Windows.h>
+#include <iostream>
+using namespace std;
+
+int _tmain(int argc, _TCHAR* argv[]) {
+ShellExecute(NULL, L"open", L"c:\\Users\\admi\\Desktop\\test.bat", NULL, NULL, SW_SHOW);
+wchar_t buffer[1024] = {0};
+GetEnvironmentVariable(L"PATH", buffer, 1024);
+wcout << buffer << endl;
+
+return 0;
+}

